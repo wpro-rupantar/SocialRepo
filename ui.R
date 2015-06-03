@@ -18,9 +18,11 @@ shinyUI(fluidPage(
 #main Panel
 mainPanel(
   tabsetPanel(type="tab",
-              tabPanel("Reports"),
-              tabPanel("Plots"))
-)
-)
-)
+              tabPanel("Overall Reports"),
+              tabPanel("Facebook Reports"),
+              tabPanel("Twitter Reports"),
+              tabPanel("Instragram Reports")
+              )
+      )
+))
 
