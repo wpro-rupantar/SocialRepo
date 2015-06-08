@@ -22,8 +22,8 @@ shinyUI(fluidPage(
 mainPanel(
   tabsetPanel(type="tab",
               tabPanel("Overall Reports",tableOutput('summ')),
-              tabPanel("Facebook Reports"),
-              tabPanel("Twitter Reports"),
+              tabPanel("Facebook Reports",tableOutput("summ2")),
+              tabPanel("Twitter Reports",plotOutput("plot1")),
               tabPanel("Instragram Reports")
               )
       )
