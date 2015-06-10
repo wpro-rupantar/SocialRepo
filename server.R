@@ -9,7 +9,7 @@ library(dplyr)
 # initializing the server
 shinyServer(function(input,output){
   ### loading and cleaning the location and likes data
-  data1<-read.csv("/Users/rupantarrana/Project/social.reporting/Rshiny/data/wpro2015.csv")
+  data1<-read.csv("./data/wpro2015.csv")
   
   # parsing the date for the data
   data1$Date<-mdy(data1$Date)
@@ -70,18 +70,37 @@ shinyServer(function(input,output){
   output$summ2<-renderTable({
     data3r()
   })
+
+  
   output$plot1=renderPlot({
-    p1 = ggplot(data3r(),aes(x=city,y=Total.new.likes)) +
-      geom_bar(stat="identity",fill = "lightblue") + coord_flip() + theme_bw()
+    p1 = ggplot(data3r()[1:10,],aes(x=reorder(city,Total.new.likes),y=Total.new.likes)) +
+      geom_bar(stat="identity",fill = "lightblue") + 
+      coord_flip() + theme_bw()+xlab("Total new Likes") + ylab("Cities")
     print(p1)
   })
-  #   
-  #   # city summary
-  #   
-  #   data5= ddply(data3,~city,summarize,Total.new.likes=sum(New_Likes))
-  #   data5= arrange(data5,desc(Total.new.likes))
-  #   data5
-  #   
-  #   #rendering
-  #   
-})
+  
+"
+  output$downloadplot <- downloadHandler(
+    filename=function(){
+    'plot.png'
+    },
+    content = function(file){
+      # open the device 
+      # create he plot 
+      # close the device
+      png(file)
+     plot(data3r()$city,data3r()$Total.new.likes)
+      dev.off()
+    }
+  )
+
+"
+    
+#     downloadHandler(
+#     filename = "plot.png" ,
+#     content =function(file){
+#       ggsave(file,p1)
+    }  
+  )
+
+
